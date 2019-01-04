@@ -7,7 +7,7 @@ const suite = new Benchmark.Suite;
 const gpuRunner = new GPU({ mode: 'webgl' });
 const cpuRunner = new GPU({ mode: 'cpu' });
 
-const size = 512;
+const size = 4096*3;
 
 
 // GPU

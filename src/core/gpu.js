@@ -23,6 +23,7 @@ class GPU extends GPUCore {
 	 */
 	constructor(settings) {
 		super(settings);
+		console.log('Constructing with settings', settings, this);
 
 		settings = settings || {};
 		let mode = settings.mode;
@@ -36,8 +37,13 @@ class GPU extends GPUCore {
 		} else if (mode === 'webgl' || mode === 'webgl-validator') {
 			detectedMode = mode || 'webgl';
 
-			const context = createNodeContext(2048, 2048);
-			const canvas = createCanvas(2048, 2048);
+			const contextTest = createNodeContext(1, 1, { preserveDrawingBuffer: false });
+			const maxTextureSize = contextTest.getParameter(contextTest.MAX_TEXTURE_SIZE);
+			const maxDimension = Math.floor(maxTextureSize/(Math.sqrt(2)));
+			const context = createNodeContext(maxTextureSize, maxTextureSize, { preserveDrawingBuffer: true });
+			console.log('Max Texture Size:', maxTextureSize);
+			console.log('Max Dimension:', maxDimension);
+			const canvas = createCanvas(1, 1);
 
 			this._webGl = context;
 			this._canvas = canvas;
